@@ -91,29 +91,22 @@ function startHeartAnimation() {
 })(jQuery);
 
 function timeElapse(c) {
-  var e = Date();
-  var f = (Date.parse(e) - Date.parse(c)) / 1000;
-  var g = Math.floor(f / (3600 * 24));
-  f = f % (3600 * 24);
-  var b = Math.floor(f / 3600);
-  if (b < 10) {
-    b = "0" + b
-  }
-  f = f % 3600;
-  var d = Math.floor(f / 60);
-  if (d < 10) {
-    d = "0" + d
-  }
-  f = f % 60;
-  if (f < 10) {
-    f = "0" + f
-  }
-  var a = '<span class="digit">' +
-    g + '</span> days <span class="digit">' +
-    b + '</span> hours <span class="digit">' +
-    d + '</span> minutes <span class="digit">' +
-    f + '</span> seconds';
-  $("#elapseClock").html(a)
+  const time = dayjs.duration(Date.parse(Date()) - Date.parse(c))
+  const Y = time.years()
+  const M = time.months()
+  const D = time.days()
+  const H = time.hours()
+  const m = time.minutes()
+  const s = time.seconds()
+  const a = i => i < 10 ? `0${i}` : i
+  var html =
+    `<span class="digit">${Y}</span> year
+    <span class="digit">${a(M)}</span> month
+    <span class="digit">${a(D)}</span> days
+    <span class="digit">${a(H)}</span> hours
+    <span class="digit">${a(m)}</span> minutes <br/>
+    <span class="digit">${a(s)}</span> seconds`;
+  $("#elapseClock").html(html)
 }
 
 function showMessages() {
